@@ -14,7 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ProdFixtures extends Fixture
+class ProdFixtures extends Fixture implements FixtureGroupInterface
 {
     private $encoder;
     private $faker;
@@ -33,7 +33,7 @@ class ProdFixtures extends Fixture
         // Pour que la méthode statique getGroups() soit prise
         // en compte, il faut que la classe implémente
         // l'interface FixtureGroupInterface.
-        return ['test'];
+        return ['prod'];
     }
 
     public function load(ObjectManager $manager)
@@ -75,6 +75,7 @@ class ProdFixtures extends Fixture
         $genres = [];
 
         $genreList = array('poésie', 'nouvelle', 'roman historique', 'roman d\'amour', 'roman d\'aventure', 'science-fiction', 'fantasy', 'biographie', 'conte', 'témoignage', 'théâtre', 'essai', 'journal intime');
+        
         foreach ($genreList as $genreItem) {
             $genre = new Genre();
             $genre->setNom($genreItem);
@@ -82,7 +83,7 @@ class ProdFixtures extends Fixture
             $genres[]=$genre;
         }
 
-    return $genres;
+        return $genres;
     } 
 
     public function loadLivres(ObjectManager $manager, int $livresCount, array $auteurs, array $genres)

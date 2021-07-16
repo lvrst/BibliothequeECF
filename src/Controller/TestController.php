@@ -49,7 +49,12 @@ class TestController extends AbstractController
         dump($livre);
 
         // Récupération des livres dont le titre contient le mot clé `lorem`
-
+        // La chaîne de caractères qu'on veut rechercher dans le titre des livres.
+        $titre = 'lorem';
+        // Le repository renvoit tous les livres qui contiennent la
+        // chaîne de caractères recherchée dans le titre.
+        $livres = $livreRepository->findByTitre($titre);
+        dump($livres);
 
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',

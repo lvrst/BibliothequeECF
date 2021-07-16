@@ -14,7 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements FixtureGroupInterface
 {
     private $encoder;
     private $faker;
@@ -75,6 +75,7 @@ class AppFixtures extends Fixture
         $genres = [];
 
         $genreList = array('poésie', 'nouvelle', 'roman historique', 'roman d\'amour', 'roman d\'aventure', 'science-fiction', 'fantasy', 'biographie', 'conte', 'témoignage', 'théâtre', 'essai', 'journal intime');
+        
         foreach ($genreList as $genreItem) {
             $genre = new Genre();
             $genre->setNom($genreItem);

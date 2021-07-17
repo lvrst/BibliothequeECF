@@ -19,6 +19,75 @@ class EmpruntRepository extends ServiceEntityRepository
         parent::__construct($registry, Emprunt::class);
     }
 
+    public function findLastEmprunts(int $num)
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.date_emprunt', 'DESC')
+            ->setMaxResults($num)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByEmprunteurId(int $id)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.emprunteur', 'b')
+            ->andWhere('b.id LIKE :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByLivreId(int $id)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.livre', 'l')
+            ->andWhere('l.id LIKE :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByReturnedBefore(string $date)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.date_retour < :str')
+            ->setParameter('str', $date)
+            ->orderBy('e.date_retour', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByUnreturned()
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.date_retour is NULL')
+            ->orderBy('e.date_emprunt', "ASC")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByIdUnreturned(int $id)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.livre', 'l')
+            ->andWhere('l.id LIKE :id')
+            ->setParameter('id', $id)
+            ->andWhere('e.date_retour is NULL')
+            ->orderBy('e.date_emprunt', "ASC")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
+
     // /**
     //  * @return Emprunt[] Returns an array of Emprunt objects
     //  */

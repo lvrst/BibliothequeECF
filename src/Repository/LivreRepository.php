@@ -22,9 +22,32 @@ class LivreRepository extends ServiceEntityRepository
     public function findByTitre(string $titre)
     {
         return $this->createQueryBuilder('l')
-            ->innerJoin('l.titre', 't')
-            ->andWhere('t.nom LIKE :titre')
-            ->setParameter('titre', "%{$genre}%")
+            ->andWhere('l.titre LIKE :titre')
+            ->setParameter('titre', "%{$titre}%")
+            ->orderBy('l.titre', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByAuteurId(int $id)
+    {
+        return $this->createQueryBuilder('l')
+            ->innerJoin('l.auteur', 'a')
+            ->andWhere('a.id LIKE :id')
+            ->setParameter('id', $id)
+            ->orderBy('l.titre', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByGenre(string $genre)
+    {
+        return $this->createQueryBuilder('l')
+            ->innerJoin('l.genres', 'g')
+            ->andWhere('g.nom LIKE :genre')
+            ->setParameter('genre', "%{$genre}%")
             ->orderBy('l.titre', 'ASC')
             ->getQuery()
             ->getResult()

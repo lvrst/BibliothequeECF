@@ -18,6 +18,62 @@ class EmprunteurRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Emprunteur::class);
     }
+    public function findByFirstnameOrLastname($name)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.nom LIKE :name')
+            ->orWhere('e.prenom LIKE :name')
+            ->setParameter('name', "%{$name}%")
+            ->orderBy('e.prenom', 'ASC')
+            ->orderBy('e.nom', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByUserId(int $id)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.user', 'u')
+            ->andWhere('u.id LIKE :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByTel(string $num)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.tel LIKE :num')
+            ->setParameter('num', "%{$num}%")
+            ->orderBy('e.nom', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByDateCreation(string $date)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.date_creation < :str')
+            ->setParameter('str', $date)
+            ->orderBy('e.date_creation', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findActivity(bool $status)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.actif LIKE :val')
+            ->setParameter('val', $status)
+            ->orderBy('e.date_creation', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return Emprunteur[] Returns an array of Emprunteur objects

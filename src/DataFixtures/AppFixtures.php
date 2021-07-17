@@ -273,9 +273,9 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
             $emprunteur = new Emprunteur();
             $emprunteur->setNom($this->faker->lastname());
             $emprunteur->setPrenom($this->faker->firstname());
-            $emprunteur->setTel('123456789'); // mettre un num aléa
+            $emprunteur->setTel($this->faker->phoneNumber());
             $emprunteur->setActif($this->faker->boolean());
-            $emprunteur->setDateCreation($this->faker->dateTime()); // mettre un datetime aléatoire
+            $emprunteur->setDateCreation($this->faker->dateTime()); 
             $emprunteur->setUser($user);
             $manager->persist($emprunteur);
             // on ajoute le troisième emprunteur créé

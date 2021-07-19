@@ -22,3 +22,9 @@
 /schemabdd/bibliothequeSchemaMCD.excalidraw
 /schemabdd/bibliothequeSchemaMLD.excalidraw
 /schemabdd/bibliothequeSchemaMPD.excalidraw
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

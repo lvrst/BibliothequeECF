@@ -91,4 +91,27 @@ class EmprunteurController extends AbstractController
 
         return $this->redirectToRoute('emprunteur_index');
     }
+
+    private function redirectUser(string $route, Emprunteur $emprunteur, EmprunteurRepository $emrpunteurRepository)
+    {
+        // Récupération du compte de l'utilisateur qui est connecté
+        $user = $this->getUser();
+
+        // On vérifie si l'utilisateur est un emprunteur 
+        if (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
+            // Récupèration du profil student
+            $userEmprunteur = $emprunteurRepository->findOneByUser($user);
+
+            // Comparaison du profil demandé par l'utilisateur et le profil de l'utilisateur
+            // Si les deux sont différents, on redirige l'utilisateur vers la page de son profil
+            if ($emprunteur->getId() != $userEmprunteur->getId()) {
+                return $this->redirectToRoute($route, [
+                    'id' => $userEmprunteur->getId(),
+                ]);
+            }
+        }
+
+        // Si aucune redirection n'est nécessaire, on renvoit une valeur nulle
+        return null;
+    }
 }

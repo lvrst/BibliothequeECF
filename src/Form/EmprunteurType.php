@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Emprunteur;
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +20,11 @@ class EmprunteurType extends AbstractType
             ->add('actif')
             ->add('date_creation')
             ->add('date_modification')
-            ->add('user')
+            ->add('user', UserType::class, [
+                'label_attr' => [
+                    'class' => 'd-none',
+                ]
+            ])
         ;
     }
 

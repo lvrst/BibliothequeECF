@@ -27,7 +27,22 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" title="liste des livres" href="/livre/">Livres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="liste des emprunteurs" href="/emprunteur/">Emprunteurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="liste des emprunts" href="/emprunt/">Emprunts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="auteur" title="liste des auteurs">Auteurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="liste des genres" href="/genre/">Genres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="liste des users" href="/user/">Users</a>
                     </li>
                     {# liens pour les admins #}
                     {% if is_granted('ROLE_ADMIN') %}

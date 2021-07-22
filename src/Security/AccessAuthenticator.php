@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Repository\EmprunteurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,21 @@ class AccessAuthenticator extends AbstractFormLoginAuthenticator implements Pass
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $emprunteurRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(
+        EntityManagerInterface $entityManager, 
+        UrlGeneratorInterface $urlGenerator, 
+        CsrfTokenManagerInterface $csrfTokenManager, 
+        UserPasswordEncoderInterface $passwordEncoder,
+        EmprunteurRepository $emprunteurRepository
+        )
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->emprunteurRepository = $emprunteurRepository;
     }
 
     public function supports(Request $request)
@@ -95,8 +104,21 @@ class AccessAuthenticator extends AbstractFormLoginAuthenticator implements Pass
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        $user = $token->getUser();
+
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+
+            $url = $this->urlGenerator->generate('livre_index');
+        } elseif (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
+            $emprunteur = $this->emprunteurRepository->findOneByUser($user);
+            $url = $this->urlGenerator->generate('emprunteur_show', [
+                'id' => $emprunteur->getId(),
+            ]);
+        } else {
+            throw new \Exception("Votre rôle n'est pas reconnu");
+        }
+
+        return new RedirectResponse($url);
     }
 
     protected function getLoginUrl()

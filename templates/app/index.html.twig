@@ -1,20 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AppController!{% endblock %}
+{% block title %}Livre index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="jumbotron">
+        <h1 class="display-4">Catalogue</h1>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/lverset/projects/bibliothequeECF/src/Controller/AppController.php'|file_link(0) }}">src/Controller/AppController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/lverset/projects/bibliothequeECF/templates/app/index.html.twig'|file_link(0) }}">templates/app/index.html.twig</a></code></li>
-    </ul>
-</div>
+
+    <div class="container">
+        <div class="card-columns">
+            {% for livre in livres %}
+                <div class="card">
+                    <div class="card-header bg-dark text-light">
+                        ISBN {{ livre.codeIsbn }}
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ livre.titre }}</h2>
+                        <p class="card-text">{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                {% for genre in livre.genres %}
+                                    <a class="badge badge-info text-capitalize" href="{{ path('genre_show', {'id': genre.id}) }}">{{ genre.nom }}</a>
+                                {% endfor %}
+                            </li>
+                            <li class="list-group-item">{{ livre.nombrePages }} pages</li>
+                            <li class="list-group-item">{{ livre.anneeEdition }}</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-primary">
+                        <a class="btn btn-primary" href="{{ path('livre_show', {'id': livre.id}) }}">show</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card p-3">
+                    <div class="card-body">
+                        <p>Aucun livre trouvé</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}

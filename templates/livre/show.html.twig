@@ -3,7 +3,11 @@
 {% block title %}Livre{% endblock %}
 
 {% block body %}
+<div class="jumbotron">
+    <a class="badge badge-light" href="{{ path('livre_index') }}">back to list</a>
     <h1>Livre</h1>
+</div>
+
 
     <table class="table">
         <tbody>
@@ -16,21 +20,34 @@
                 <td>{{ livre.titre }}</td>
             </tr>
             <tr>
-                <th>Annee_edition</th>
+                <th>Auteur</th>
+                <td>{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Genre(s)</th>
+                <td>
+                    <p>
+                    {% for genre in livre.genres %}
+                    {{ genre.nom }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <th>Année d'édition</th>
                 <td>{{ livre.anneeEdition }}</td>
             </tr>
             <tr>
-                <th>Nombre_pages</th>
+                <th>Nombre de pages</th>
                 <td>{{ livre.nombrePages }}</td>
             </tr>
             <tr>
-                <th>Code_isbn</th>
+                <th>Code ISBN</th>
                 <td>{{ livre.codeIsbn }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('livre_index') }}">back to list</a>
 
     {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('admin_livre_edit', {'id': livre.id}) }}">edit</a>

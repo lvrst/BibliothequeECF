@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Emprunt;
 use App\Form\EmpruntType;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/emprunt")
+ * @Route("/admin/emprunt")
  */
 class EmpruntController extends AbstractController
 {
@@ -45,16 +45,6 @@ class EmpruntController extends AbstractController
         return $this->render('emprunt/new.html.twig', [
             'emprunt' => $emprunt,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="emprunt_show", methods={"GET"})
-     */
-    public function show(Emprunt $emprunt): Response
-    {
-        return $this->render('emprunt/show.html.twig', [
-            'emprunt' => $emprunt,
         ]);
     }
 

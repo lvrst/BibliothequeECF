@@ -46,7 +46,7 @@ class UserType extends AbstractType
                 'constraints' => [
                     // Obligation de valeurs de longueur comprise entre 6 et 190.
                     new Length([
-                        'min' => 6,
+                        'min' => 3,
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),

@@ -3,7 +3,10 @@
 {% block title %}Genre{% endblock %}
 
 {% block body %}
+<div class="jumbotron">
     <h1>Genre</h1>
+    <a class="badge badge-secondary" href="{{ path('genre_index') }}">back to list</a>
+</div>
 
     <table class="table">
         <tbody>
@@ -18,9 +21,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('genre_index') }}">back to list</a>
 
-    <a href="{{ path('genre_edit', {'id': genre.id}) }}">edit</a>
+    <a href="{{ path('admin_genre_edit', {'id': genre.id}) }}">edit</a>
 
     {{ include('genre/_delete_form.html.twig') }}
 {% endblock %}

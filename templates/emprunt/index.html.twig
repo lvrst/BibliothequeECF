@@ -2,15 +2,23 @@
 
 {% block title %}Emprunt index{% endblock %}
 
-{% block body %}
-    <h1>Emprunt index</h1>
+{% block body %}    
+<div class="jumbotron">
+    <h1 class="display-4">Emprunt index</h1>
+    <a class="btn btn-primary btn-lg" href="{{ path('admin_emprunt_new') }}" role ="button">Create new</a>
+</div>
 
-    <table class="table">
-        <thead>
+
+<div class="container">
+    <table class="table table-striped table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th>Id</th>
-                <th>Date_emprunt</th>
-                <th>Date_retour</th>
+                <th>Emprunteur</th>
+                <th>Titre du livre</th>
+                <th>Auteur du livre</th>
+                <th>Date d'emprunt</th>
+                <th>Date de retour</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,11 +26,14 @@
         {% for emprunt in emprunts %}
             <tr>
                 <td>{{ emprunt.id }}</td>
+                <td>{{ emprunt.emprunteur.prenom }} {{ emprunt.emprunteur.nom }}</td>
+                <td>{{ emprunt.livre.titre }}</td>
+                <td>{{ emprunt.livre.auteur.prenom }} {{ emprunt.livre.auteur.nom }}</td>
                 <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('emprunt_show', {'id': emprunt.id}) }}">show</a>
-                    <a href="{{ path('emprunt_edit', {'id': emprunt.id}) }}">edit</a>
+                    <a class="badge badge-light" href="{{ path('emprunt_show', {'id': emprunt.id}) }}">show</a>
+                    <a  class="badge badge-light"href="{{ path('admin_emprunt_edit', {'id': emprunt.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -32,6 +43,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('emprunt_new') }}">Create new</a>
 {% endblock %}

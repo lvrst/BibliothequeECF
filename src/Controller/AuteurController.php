@@ -25,28 +25,6 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="auteur_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $auteur = new Auteur();
-        $form = $this->createForm(AuteurType::class, $auteur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($auteur);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('auteur_index');
-        }
-
-        return $this->render('auteur/new.html.twig', [
-            'auteur' => $auteur,
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
      * @Route("/{id}", name="auteur_show", methods={"GET"})
@@ -58,37 +36,5 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="auteur_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Auteur $auteur): Response
-    {
-        $form = $this->createForm(AuteurType::class, $auteur);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('auteur_index');
-        }
-
-        return $this->render('auteur/edit.html.twig', [
-            'auteur' => $auteur,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="auteur_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Auteur $auteur): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$auteur->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($auteur);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('auteur_index');
-    }
 }

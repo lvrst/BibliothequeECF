@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Genre;
 use App\Form\GenreType;
@@ -11,20 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/genre")
+ * @Route("/admin/genre")
  */
 class GenreController extends AbstractController
 {
-    /**
-     * @Route("/", name="genre_index", methods={"GET"})
-     */
-    public function index(GenreRepository $genreRepository): Response
-    {
-        return $this->render('genre/index.html.twig', [
-            'genres' => $genreRepository->findAll(),
-        ]);
-    }
-
     /**
      * @Route("/new", name="admin_genre_new", methods={"GET","POST"})
      */
@@ -45,16 +35,6 @@ class GenreController extends AbstractController
         return $this->render('genre/new.html.twig', [
             'genre' => $genre,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="genre_show", methods={"GET"})
-     */
-    public function show(Genre $genre): Response
-    {
-        return $this->render('genre/show.html.twig', [
-            'genre' => $genre,
         ]);
     }
 

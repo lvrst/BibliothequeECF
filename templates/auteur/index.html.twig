@@ -3,14 +3,18 @@
 {% block title %}Auteur index{% endblock %}
 
 {% block body %}
-    <h1>Auteur index</h1>
+    <div class="jumbotron">
+        <h1 class="display-4">Auteur index</h1>
+        <a class="btn btn-primary btn-lg" href="{{ path('admin_auteur_new') }}" role ="button">Create new</a>
+    </div>
 
-    <table class="table">
-        <thead>
+    <div class="container">
+        <table class="table table-striped table-responsive">
+            <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>Prenom</th>
+                <th>Prénom</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,8 +25,8 @@
                 <td>{{ auteur.nom }}</td>
                 <td>{{ auteur.prenom }}</td>
                 <td>
-                    <a href="{{ path('auteur_show', {'id': auteur.id}) }}">show</a>
-                    <a href="{{ path('auteur_edit', {'id': auteur.id}) }}">edit</a>
+                    <a class="badge badge-light" href="{{ path('auteur_show', {'id': auteur.id}) }}">show</a>
+                    <a class="badge badge-light" href="{{ path('admin_auteur_edit', {'id': auteur.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -32,6 +36,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('auteur_new') }}">Create new</a>
 {% endblock %}

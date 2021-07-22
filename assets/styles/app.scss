@@ -1,0 +1,68 @@
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+
+
+body {
+    background-color: lighten(silver, 20%);
+    html {
+  font-size: 1rem;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 1.2rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 1.4rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1.6rem;
+  }
+}
+}
+
+
+
+// tr {
+//     display: flex;
+//     flex-flow: column nowrap;
+//     justify-items: center;
+//     border: 1px solid green;
+//     border-radius: 10px;
+//     margin: 8px;
+//     padding: 10px;
+//     box-shadow: 1px 1px 8px darkgreen;
+//     background-color: mediumspringgreen;
+//     & td {
+//         margin: 0 auto;
+//         & a {
+//             display: block;
+//             text-align: center;
+//             background-color: lightgreen;
+//             padding: 4px;
+//             margin: 8px;
+//             border-radius: 3px;
+//             box-shadow: 0 1px 4px green;
+//             text-decoration: none;
+//             text-transform: uppercase;
+//         }
+//     }
+// }
+
+// tbody {
+//     display: flex;
+//     flex-flow: row wrap;
+//     justify-content: space-between;
+    
+// }
+

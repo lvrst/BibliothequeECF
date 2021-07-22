@@ -3,8 +3,11 @@
 {% block title %}Emprunteur{% endblock %}
 
 {% block body %}
+<div class="jumbotron">
+    <a class="badge badge-light" href="{{ path('emprunteur_index') }}">back to list</a>
     <h1>Emprunteur</h1>
-
+</div>
+<div class="container"></div>
     <table class="table">
         <tbody>
             <tr>
@@ -16,7 +19,7 @@
                 <td>{{ emprunteur.nom }}</td>
             </tr>
             <tr>
-                <th>Prenom</th>
+                <th>Prénom</th>
                 <td>{{ emprunteur.prenom }}</td>
             </tr>
             <tr>
@@ -28,19 +31,50 @@
                 <td>{{ emprunteur.actif ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Date_creation</th>
+                <th>Date de création</th>
                 <td>{{ emprunteur.dateCreation ? emprunteur.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Date_modification</th>
+                <th>Date de modification</th>
                 <td>{{ emprunteur.dateModification ? emprunteur.dateModification|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
+</div>
+    {% if emprunteur.emprunts is not empty %}
+        <div class="container">
+            <table class="table table-striped table-responsive">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Date d'emprunt</th>
+                        <th>Date de retour</th>
+                    </tr>
+                </thead>
+                {% for emprunt in emprunteur.emprunts %}
+                    <tr>
+                        <td>
+                            {{ emprunt.livre.titre }}
+                        </td>
+                        <td>
+                            {{ emprunt.livre.auteur.prenom }} {{ emprunt.livre.auteur.nom }}
+                        </td>
+                        <td>
+                            {{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('Y-m-d H:i:s') : '' }}
+                        </td>
+                        <td>
+                            {{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d H:i:s') : '' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
 
-    <a href="{{ path('emprunteur_index') }}">back to list</a>
 
-    <a href="{{ path('emprunteur_edit', {'id': emprunteur.id}) }}">edit</a>
+
+    <a class="btn btn-primary" href="{{ path('admin_emprunteur_edit', {'id': emprunteur.id}) }}">Edit</a>
 
     {{ include('emprunteur/_delete_form.html.twig') }}
 {% endblock %}

@@ -3,7 +3,11 @@
 {% block title %}Auteur{% endblock %}
 
 {% block body %}
-    <h1>Auteur</h1>
+    <div class="jumbotron">
+        <a class="badge badge-light" href="{{ path('auteur_index') }}">back to list</a>
+        <h1>Auteur</h1>
+    </div>
+
 
     <table class="table">
         <tbody>
@@ -16,15 +20,22 @@
                 <td>{{ auteur.nom }}</td>
             </tr>
             <tr>
-                <th>Prenom</th>
+                <th>Prénom</th>
                 <td>{{ auteur.prenom }}</td>
+            </tr>
+
+            <tr>
+                <th>Livres</th>
+                <td>
+                {% for livre in auteur.livres %}
+                <a href="{{ path('livre_show', {'id': livre.id}) }}">{{ livre.titre }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('auteur_index') }}">back to list</a>
-
-    <a href="{{ path('auteur_edit', {'id': auteur.id}) }}">edit</a>
+    <a class="btn btn-primary" href="{{ path('admin_auteur_edit', {'id': auteur.id}) }}">edit</a>
 
     {{ include('auteur/_delete_form.html.twig') }}
 {% endblock %}

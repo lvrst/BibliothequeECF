@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Livre;
 use App\Form\LivreType;
 use App\Repository\LivreRepository;
+use App\Repository\AuteurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class LivreController extends AbstractController
     public function index(LivreRepository $livreRepository): Response
     {
         return $this->render('livre/index.html.twig', [
-            'livres' => $livreRepository->findAll(),
+            'livres' => $livreRepository->findAll()
         ]);
     }
 

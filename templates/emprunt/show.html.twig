@@ -11,21 +11,23 @@
     <div class="container">
         <table class="table">
             <tbody>
+                {% if is_granted('ROLE_ADMIN') %}
                 <tr>
                     <th>Id</th>
                     <td>{{ emprunt.id }}</td>
                 </tr>
+                {% endif %}
                 <tr>
                     <th>Emprunteur</th>
                     <td>{{ emprunt.emprunteur.prenom }} {{ emprunt.emprunteur.nom }}</td>
                 </tr>
                 <tr>
                     <th>Titre du livre</th>
-                    <td>{{ emprunt.livre.titre }}</td>
+                    <td><a href="{{ path('livre_show', {'id': emprunt.livre.id}) }}">{{ emprunt.livre.titre }}</a></td>
                 </tr>
                 <tr>
                     <th>Auteur du livre</th>
-                    <td>{{ emprunt.livre.auteur.prenom }} {{ emprunt.livre.auteur.nom }}</td>
+                    <td><a href="{{ path('auteur_show', {'id': emprunt.livre.auteur.id}) }}">{{ emprunt.livre.auteur.prenom }} {{ emprunt.livre.auteur.nom }}</a></td>
                 </tr>
                 <tr>
                     <th>Date d'emprunt</th>

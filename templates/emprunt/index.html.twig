@@ -15,7 +15,7 @@
     <table class="table table-striped table-responsive">
         <thead class="thead-dark">
             <tr>
-                <th>Id</th>
+                {% if is_granted('ROLE_ADMIN') %}<th>Id</th>{% endif %}
                 <th>Emprunteur</th>
                 <th>Titre du livre</th>
                 <th>Auteur du livre</th>
@@ -27,7 +27,7 @@
         <tbody>
         {% for emprunt in emprunts %}
             <tr>
-                <td>{{ emprunt.id }}</td>
+                {% if is_granted('ROLE_ADMIN') %}<td>{{ emprunt.id }}</td>{% endif %}
                 <td>{{ emprunt.emprunteur.prenom }} {{ emprunt.emprunteur.nom }}</td>
                 <td>{{ emprunt.livre.titre }}</td>
                 <td>{{ emprunt.livre.auteur.prenom }} {{ emprunt.livre.auteur.nom }}</td>

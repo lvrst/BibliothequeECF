@@ -15,26 +15,26 @@
 <div class="container">
     <table class="table">
         <tbody>
+            {% if is_granted('ROLE_ADMIN') %}
             <tr>
                 <th>Id</th>
                 <td>{{ livre.id }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Titre</th>
                 <td>{{ livre.titre }}</td>
             </tr>
             <tr>
                 <th>Auteur</th>
-                <td>{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</td>
+                <td><a href="{{ path('auteur_show', {'id': livre.auteur.id}) }}">{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</a></td>
             </tr>
             <tr>
                 <th>Genre(s)</th>
-                <td>
-                    <p>
-                    {% for genre in livre.genres %}
+                <td>{% for genre in livre.genres %}
+                    <a class="badge badge-info" href="{{ path('genre_show', {'id': genre.id}) }}">
                     {{ genre.nom }}{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                    </p>
+                    </a>{% endfor %}
                 </td>
             </tr>
             <tr>
@@ -48,6 +48,10 @@
             <tr>
                 <th>Code ISBN</th>
                 <td>{{ livre.codeIsbn }}</td>
+            </tr>
+            <tr>
+                <th>Disponibilité</th>
+                <td>{% if livre.isEmpruntable() == true %}<span class="text-success">Disponible à l'emprunt</span>{% else %}<span class="text-danger">Indisponible à l'emprunt</span>{% endif %}</td>
             </tr>
         </tbody>
     </table>

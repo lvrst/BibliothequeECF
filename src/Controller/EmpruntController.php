@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Emprunt;
 use App\Form\EmpruntType;
+use App\Repository\LivreRepository;
 use App\Repository\EmpruntRepository;
 use App\Repository\EmprunteurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,7 +62,7 @@ class EmpruntController extends AbstractController
     /**
      * @Route("/{id}", name="emprunt_show", methods={"GET"})
      */
-    public function show(Emprunt $emprunt, EmprunteurRepository $emprunteurRepository): Response
+    public function show(Emprunt $emprunt, EmprunteurRepository $emprunteurRepository, LivreRepository $livreRepository): Response
     {
         if($this->isGranted('ROLE_EMPRUNTEUR')) {
             $user = $this->getUser();
@@ -72,6 +73,7 @@ class EmpruntController extends AbstractController
         }
         return $this->render('emprunt/show.html.twig', [
             'emprunt' => $emprunt,
+            'livre' => $emprunt->getLivre()
         ]);
     }
 

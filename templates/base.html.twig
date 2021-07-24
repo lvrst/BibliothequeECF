@@ -27,13 +27,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Page d'accueil</a>
                     </li>
+                    {% if is_granted('ROLE_EMPRUNTEUR') %}
                     <li class="nav-item">
-                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EMPRUNTEUR') %}
-                    <a class="nav-link" href="/logout">Me déconnecter</a>
-                    {% else %}
-                    <a class="nav-link" href="/login">Se connecter</a>
-                    {% endif %}
+                        <a class="nav-link" href="{{ path('emprunt_index') }}">Mes emprunts</a>
                     </li>
+                    {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,11 +54,18 @@
                                 <a class="dropdown-item" title="gestion des emprunts" href="/emprunt/">Emprunts</a>
                             </li>
                             <li class="dropdown-item">
-                                <a class="dropdown-item" title="gestion des users" href="/user/">Users</a>
+                                <a class="dropdown-item" title="gestion des utilisateurs" href="/user/">Utilisateurs</a>
                             </li>
                         </ul>
                     </li>
                     {% endif %}
+                    <li class="nav-item">
+                    {% if app.user %}
+                    <a class="nav-link" href="{{ path('app_logout') }}">Me déconnecter ({{ app.user.username }})</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                    {% endif %}
+                    </li>
                     </ul>
                 </ul>
             </div>

@@ -13,24 +13,26 @@
         <div class="card-columns">
             {% for livre in livres %}
                 <div class="card">
-                    <div class="card-header bg-dark text-light">
-                        ISBN {{ livre.codeIsbn }}
-                    </div>
+                    <a href="{{ path('livre_show', {'id': livre.id}) }}">
+                        <div class="card-header bg-dark text-light">
+                            <h2 class="card-title">{{ livre.titre }}</h2>
+                        </div>
+                    </a>
                     <div class="card-body">
-                        <h2 class="card-title">{{ livre.titre }}</h2>
+                        
                         <p class="card-text">{{ livre.auteur.prenom }} {{ livre.auteur.nom }}</p>
                         <ul class="list-group list-group-flush">
+                            <li class="list-group-item">ISBN {{ livre.codeIsbn }}</li>
+                            {% if livre.genres is not empty %}
                             <li class="list-group-item">
                                 {% for genre in livre.genres %}
                                     <a class="badge badge-info text-capitalize" href="{{ path('genre_show', {'id': genre.id}) }}">{{ genre.nom }}</a>
                                 {% endfor %}
                             </li>
+                            {% endif %}
                             <li class="list-group-item">{{ livre.nombrePages }} pages</li>
                             <li class="list-group-item">{{ livre.anneeEdition }}</li>
                         </ul>
-                    </div>
-                    <div class="card-footer bg-primary">
-                        <a class="btn btn-primary" href="{{ path('livre_show', {'id': livre.id}) }}">show</a>
                     </div>
                 </div>
             {% else %}

@@ -108,7 +108,7 @@ class AccessAuthenticator extends AbstractFormLoginAuthenticator implements Pass
 
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
 
-            $url = $this->urlGenerator->generate('livre_index');
+            $url = $this->urlGenerator->generate('emprunt_index');
         } elseif (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
             $emprunteur = $this->emprunteurRepository->findOneByUser($user);
             $url = $this->urlGenerator->generate('emprunt_index', [

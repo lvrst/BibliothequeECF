@@ -17,13 +17,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="#">Bibliothèque</a>
 
-            {% if is_granted('ROLE_EMPRUNTEUR') %}
-                <span class="text-light">Bienvenue {{ emprunteur.prenom }}</span>
-            {% elseif is_granted('ROLE_ADMIN') %}
-                <span class="text-light">Bonjour Maître</span>
-            {% else %}
-                <span class="text-light">Qui êtes-vous ?</span>
-            {% endif %}
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -34,25 +28,11 @@
                         <a class="nav-link active" aria-current="page" href="/">Page d'accueil</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" title="liste des livres" href="/livre/">Livres</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" title="liste des auteurs" href="/auteur/">Auteurs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" title="liste des genres" href="/genre/">Genres</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" title="liste des emprunteurs" href="/emprunteur/">Emprunteurs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" title="liste des emprunts" href="/emprunt/">Emprunts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" title="liste des users" href="/user/">Users</a>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EMPRUNTEUR') %}
+                    <a class="nav-link" href="/logout">Me déconnecter</a>
+                    {% else %}
+                    <a class="nav-link" href="/login">Se connecter</a>
+                    {% endif %}
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown">

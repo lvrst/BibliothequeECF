@@ -15,7 +15,9 @@ class AppController extends AbstractController
      * @Route("/", name="app_index")
      */
     public function index(LivreRepository $livreRepository): Response
-    {
+    {   
+
+
         return $this->render('app/index.html.twig', [
             'livres' => $livreRepository->findAll(),
         ]);

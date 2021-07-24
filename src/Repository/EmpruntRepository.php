@@ -85,9 +85,6 @@ class EmpruntRepository extends ServiceEntityRepository
         ;
     }
 
-
-
-
     // /**
     //  * @return Emprunt[] Returns an array of Emprunt objects
     //  */

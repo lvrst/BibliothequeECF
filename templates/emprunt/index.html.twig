@@ -5,7 +5,9 @@
 {% block body %}    
 <div class="jumbotron">
     <h1 class="display-4">Emprunt index</h1>
+    {% if is_granted('ROLE_ADMIN') %}
     <a class="btn btn-primary btn-lg" href="{{ path('admin_emprunt_new') }}" role ="button">Create new</a>
+    {% endif %}
 </div>
 
 
@@ -33,7 +35,9 @@
                 <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a class="badge badge-light" href="{{ path('emprunt_show', {'id': emprunt.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a  class="badge badge-light"href="{{ path('admin_emprunt_edit', {'id': emprunt.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

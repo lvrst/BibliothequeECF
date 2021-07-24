@@ -2,10 +2,13 @@
 
 {% block title %}Emprunteur index{% endblock %}
 
+
 {% block body %}
     <div class="jumbotron">
         <h1 class="display-4">Emprunteur index</h1>
+        {% if is_granted('ROLE_ADMIN') %}
         <a class="btn btn-primary btn-lg" href="{{ path('admin_emprunteur_new') }}" role ="button">Create new</a>
+        {% endif %}
     </div>
 
     <div class="container">
@@ -34,7 +37,9 @@
                 <td>{{ emprunteur.dateModification ? emprunteur.dateModification|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a class="badge badge-light" href="{{ path('emprunteur_show', {'id': emprunteur.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a class="badge badge-light" href="{{ path('admin_emprunteur_edit', {'id': emprunteur.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

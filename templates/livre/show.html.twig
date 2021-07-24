@@ -4,11 +4,15 @@
 
 {% block body %}
 <div class="jumbotron">
+    {% if is_granted('ROLE_ADMIN') %}
     <a class="badge badge-light" href="{{ path('livre_index') }}">back to list</a>
+    {% elseif is_granted('ROLE_EMPRUNTEUR') %}
+    <a class="badge badge-light" href="{{ path('app_index') }}">back to list</a>
+    {% endif %}
     <h1>Livre</h1>
 </div>
 
-
+<div class="container">
     <table class="table">
         <tbody>
             <tr>
@@ -47,10 +51,10 @@
             </tr>
         </tbody>
     </table>
-
+</div>
 
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('admin_livre_edit', {'id': livre.id}) }}">edit</a>
+    <a class="btn btn-primary" href="{{ path('admin_livre_edit', {'id': livre.id}) }}">edit</a>
     {% endif %}
 
     {% if is_granted('ROLE_ADMIN') %}

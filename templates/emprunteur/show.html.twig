@@ -74,7 +74,9 @@
 
 
 
+    {% if is_granted('ROLE_ADMIN') %}
     <a class="btn btn-primary" href="{{ path('admin_emprunteur_edit', {'id': emprunteur.id}) }}">Edit</a>
 
     {{ include('emprunteur/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

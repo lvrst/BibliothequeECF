@@ -5,7 +5,9 @@
 {% block body %}
     <div class="jumbotron">
         <h1 class="display-4">Genre index</h1>
+        {% if is_granted('ROLE_ADMIN') %}
         <a class="btn btn-primary btn-lg" href="{{ path('admin_genre_new') }}" role ="button">Create new</a>
+        {% endif %}
     </div>
     
     
@@ -25,7 +27,9 @@
                 <td>{{ genre.nom }}</td>
                 <td>
                     <a class="badge badge-light"  href="{{ path('genre_show', {'id': genre.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a class="badge badge-light"  href="{{ path('admin_genre_edit', {'id': genre.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

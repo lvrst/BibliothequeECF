@@ -5,9 +5,11 @@
 {% block body %}
     <div class="jumbotron">
         <a class="badge badge-light" href="{{ path('livre_index') }}">back to list</a>
-        <h1>Create new Livre</h1>
+        <h1>Créer un nouveau livre</h1>
     </div>
-
-    {{ include('livre/_form.html.twig') }}
+    <div class="container">
+        {{ include('livre/_form.html.twig') }}
+    </div>
+    
 
 {% endblock %}

@@ -7,8 +7,9 @@
         <a class="badge badge-light" href="{{ path('livre_index') }}">back to list</a>
         <h1>Edit Livre</h1>
     </div>
+    <div class="container">
+        {{ include('livre/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('livre/_form.html.twig', {'button_label': 'Update'}) }}
-
-    {{ include('/livre/_delete_form.html.twig') }}
+        {{ include('/livre/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

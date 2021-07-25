@@ -7,9 +7,9 @@
         <a class="badge badge-light" href="{{ path('emprunteur_index') }}">back to list</a>
         <h1>Edit Emprunteur</h1>
     </div>
-
+<div class="container">
     {{ include('emprunteur/_form.html.twig', {'button_label': 'Update'}) }}
 
 
-    {{ include('emprunteur/_delete_form.html.twig') }}
+    {{ include('emprunteur/_delete_form.html.twig') }}</div>
 {% endblock %}

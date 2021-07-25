@@ -44,9 +44,9 @@
                     <td>{{ livre.nombrePages }}</td>
                     <td>{{ livre.codeIsbn }}</td>
                     {% if livre.isEmpruntable %}
-                        <td>Le livre est disponible</td>
+                        <td><span class="text-success">Disponible à l'emprunt</span></td>
                     {% else %}
-                        <td>Le livre n'est pas disponible</td>
+                        <td><span class="text-danger">Indisponible à l'emprunt</span></td>
                     {% endif %}
                     <td>
                         <a class="badge badge-light" href="{{ path('livre_show', {'id': livre.id}) }}">show</a>

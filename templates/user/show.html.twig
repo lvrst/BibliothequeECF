@@ -3,7 +3,13 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
+<div class="jumbotron">
     <h1>User</h1>
+    <a class="badge badge-light" href="{{ path('admin_user_index') }}">back to list</a>
+</div>
+    
+<div class="container">
+
 
     <table class="table">
         <tbody>
@@ -17,21 +23,27 @@
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-
+                <td>{% for role in user.roles %}
+                        {{role}}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
             </tr>
+            {% if 'ROLE_EMPRUNTEUR' in user.roles %}
             <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
+                <th>Nom, Prénom</th>
+                <td>
+                    <a href="{{ path('emprunteur_show', {'id': emprunteur.id}) }}">{{ emprunteur.nom }}, {{ emprunteur.prenom }}</a>
+                </td>
             </tr>
+            {% endif %}
         </tbody>
     </table>
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
+</div>
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+        <div class="container">
+            <a class="btn btn-primary" href="{{ path('admin_user_edit', {'id': user.id}) }}">Editer</a>
 
-    {{ include('user/_delete_form.html.twig') }}
+            {{ include('user/_delete_form.html.twig') }}
+        </div>
     {% endif %}
 {% endblock %}

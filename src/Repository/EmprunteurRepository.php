@@ -18,7 +18,7 @@ class EmprunteurRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Emprunteur::class);
     }
-    public function findByFirstnameOrLastname($name)
+    public function findByFirstnameOrLastname(string $name)
     {
         return $this->createQueryBuilder('e')
             ->where('e.nom LIKE :name')
@@ -35,10 +35,10 @@ class EmprunteurRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->innerJoin('e.user', 'u')
-            ->andWhere('u.id LIKE :id')
+            ->where('u.id LIKE :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
 
@@ -67,7 +67,7 @@ class EmprunteurRepository extends ServiceEntityRepository
     public function findActivity(bool $status)
     {
         return $this->createQueryBuilder('e')
-            ->where('e.actif LIKE :val')
+            ->where('e.actif = :val')
             ->setParameter('val', $status)
             ->orderBy('e.date_creation', 'ASC')
             ->getQuery()

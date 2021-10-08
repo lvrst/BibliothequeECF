@@ -40,4 +40,4 @@ security:
         - { path: "^/user", roles: [ROLE_ADMIN] }
         - { path: "^/emprunteur", roles: [ROLE_ADMIN] }
         - { path: "^/emprunt", roles: [ROLE_ADMIN, ROLE_EMPRUNTEUR] }
-        - { path: "^/genre", roles: [ROLE_ADMIN, ROLE_EMPRUNTEUR] }
+        - { path: "^/genre", roles: [ROLE_ADMIN] }

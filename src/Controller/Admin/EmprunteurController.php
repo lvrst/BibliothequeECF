@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/admin/emprunteur")
@@ -25,6 +26,19 @@ class EmprunteurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Vérification de la présence d'un mot de passe
+            // On ne met à jour le mot de passe que si l'utilisateur
+            // en a fourni un.
+            if ($form->get('plainPassword')->getData()) {
+                // Hashage du mot de passe
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($emprunteur);
             $entityManager->flush();

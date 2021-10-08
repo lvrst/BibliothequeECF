@@ -93,21 +93,13 @@ class ProdFixtures extends Fixture implements FixtureGroupInterface
         // de création d'objects puissent utiliser les livres
         $livres = [];
 
-        // Création d'un compteur qui contient l'index de l'auteur en cours
-        // dans le tableau des auteurs.
-        // Assez logiquement, le premier index est 0 car on commence par
-        // utiliser le premier auteur.
-        $auteurIndex = 0;
-
-        $auteur = $auteurs[$auteurIndex];
-
         // création d'un livre avec des données constantes
         $livre = new Livre();
         $livre->setTitre('Lorem ipsum dolor sit amet');
         $livre->setAnneeEdition(2010);
         $livre->setNombrePages(100);
         $livre->setCodeIsbn('9785786930024');
-        $livre->setAuteur($auteur);
+        $livre->setAuteur($auteurs[0]);
         $livre->addGenre($genres[0]);
 
         $manager->persist($livre);
@@ -115,8 +107,6 @@ class ProdFixtures extends Fixture implements FixtureGroupInterface
         // on ajoute le premier livre créé
         $livres[] = $livre;
 
-        $auteurIndex++;
-        $auteur = $auteurs[$auteurIndex];
 
         // second livre
         $livre = new Livre();
@@ -124,13 +114,10 @@ class ProdFixtures extends Fixture implements FixtureGroupInterface
         $livre->setAnneeEdition(2011);
         $livre->setNombrePages(150);
         $livre->setCodeIsbn('9783817260935');
-        $livre->setAuteur($auteur);
+        $livre->setAuteur($auteurs[1]);
         $livre->addGenre($genres[1]);
         $manager->persist($livre);
         $livres[] = $livre;
-
-        $auteurIndex++;
-        $auteur = $auteurs[$auteurIndex];
 
         // troisième livre
         $livre = new Livre();
@@ -138,13 +125,10 @@ class ProdFixtures extends Fixture implements FixtureGroupInterface
         $livre->setAnneeEdition(2012);
         $livre->setNombrePages(200);
         $livre->setCodeIsbn('9782020493727');
-        $livre->setAuteur($auteur);
+        $livre->setAuteur($auteurs[2]);
         $livre->addGenre($genres[2]);
         $manager->persist($livre);
         $livres[] = $livre;
-
-        $auteurIndex++;
-        $auteur = $auteurs[$auteurIndex];
 
         // quatrième livre
         $livre = new Livre();
@@ -152,14 +136,13 @@ class ProdFixtures extends Fixture implements FixtureGroupInterface
         $livre->setAnneeEdition(2013);
         $livre->setNombrePages(250);
         $livre->setCodeIsbn('9794059561353');
-        $livre->setAuteur($auteur);
+        $livre->setAuteur($auteurs[3]);
         $livre->addGenre($genres[3]);
         $manager->persist($livre);
         $livres[] = $livre;
 
         return $livres;
     }
-
 
     public function loadEmprunteurs(ObjectManager $manager, int $emprunteursCount)
     {
@@ -263,7 +246,6 @@ class ProdFixtures extends Fixture implements FixtureGroupInterface
         return $emprunteurs;
     }
 
-
     public function loadEmprunts(ObjectManager $manager, int $empruntsCount, array $livres, array $emprunteurs)
     {
         // création d'un tableau qui contiendra les emprunts qu'on va créer
@@ -319,45 +301,23 @@ class ProdFixtures extends Fixture implements FixtureGroupInterface
         return $emprunts;
     }
 
-
     public function loadAuteurs(ObjectManager $manager, int $auteursCount)
     {
-        // création d'un tableau qui contiendra les auteurs qu'on va créer
-        // la fonction va pouvoir renvoyer ce tableau pour que d'autres fonctions
-        // de création d'objects puissent utiliser les auteurs
         $auteurs = [];
 
-        // création d'un premier auteur avec des données constantes
-        $auteur = new Auteur();
-        $auteur->setNom('auteur inconnu');
-        $auteur->setPrenom(' ');
-        $manager->persist($auteur);
-        // on ajoute le premier auteur créé
-        $auteurs[] = $auteur;
-
-        // création d'un second auteur avec des données constantes
-        $auteur = new Auteur();
-        $auteur->setNom('Cartier');
-        $auteur->setPrenom('Hugues');
-        $manager->persist($auteur);
-        // on ajoute le second auteur créé
-        $auteurs[] = $auteur;
-
-        // création d'un troisième auteur avec des données constantes
-        $auteur = new Auteur();
-        $auteur->setNom('Lambert');
-        $auteur->setPrenom('Armand');
-        $manager->persist($auteur);
-        // on ajoute le troisième auteur créé
-        $auteurs[] = $auteur;
-
-        // création d'un quatrième auteur avec des données constantes
-        $auteur = new Auteur();
-        $auteur->setNom('Moitessier');
-        $auteur->setPrenom('Thomas');
-        $manager->persist($auteur);
-        // on ajoute le quatrième auteur créé
-        $auteurs[] = $auteur;
+        $nomAuteurList = array(
+                'auteur inconnu' => ' ',
+                'Cartier' => 'Hugues',
+                'Lambert' => 'Armand',
+                'Moitessier' => 'Thomas'
+        );
+        
+        foreach ($nomAuteurList as $nom => $prenom) {
+            $auteur = new Auteur();
+            $auteur->setNom($nom);
+            $manager->persist($prenom);
+            $auteurs[]=$auteur;
+        }
 
         return $auteurs;
     }

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/admin/user")
@@ -36,6 +37,14 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -54,10 +63,7 @@ class UserController extends AbstractController
      */
     public function show(User $user, EmprunteurRepository $emprunteurRepository): Response
     {
-        $emprunteur = '';
-        if (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
-            $emprunteur = $emprunteurRepository->findOneByUser($user);
-        }
+        $emprunteur = $emprunteurRepository->findOneByUser($user);
         
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -74,6 +80,19 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Vérification de la présence d'un mot de passe
+            // On ne met à jour le mot de passe que si l'utilisateur
+            // en a fourni un.
+            if ($form->get('plainPassword')->getData()) {
+                // Hashage du mot de passe
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_user_index');

@@ -37,29 +37,6 @@ class EmpruntController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="admin_emprunt_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $emprunt = new Emprunt();
-        $form = $this->createForm(EmpruntType::class, $emprunt);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($emprunt);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('emprunt_index');
-        }
-
-        return $this->render('emprunt/new.html.twig', [
-            'emprunt' => $emprunt,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="emprunt_show", methods={"GET"})
      */
     public function show(Emprunt $emprunt, EmprunteurRepository $emprunteurRepository, LivreRepository $livreRepository): Response
@@ -75,39 +52,5 @@ class EmpruntController extends AbstractController
             'emprunt' => $emprunt,
             'livre' => $emprunt->getLivre()
         ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="admin_emprunt_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Emprunt $emprunt): Response
-    {
-        $form = $this->createForm(EmpruntType::class, $emprunt);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('emprunt_index');
-        }
-
-        return $this->render('emprunt/edit.html.twig', [
-            'emprunt' => $emprunt,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="admin_emprunt_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Emprunt $emprunt): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$emprunt->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($emprunt);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('emprunt_index');
     }
 }

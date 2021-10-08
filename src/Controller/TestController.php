@@ -88,6 +88,7 @@ class TestController extends AbstractController
         $livre->setCodeIsbn('9790412882714');
         $livre->setAuteur($auteur);
         $livre->addGenre($genre);
+        $entityManager->persist($livre);
         $entityManager->flush();
         dump($livre);
 
@@ -183,6 +184,7 @@ class TestController extends AbstractController
         $emprunt->setDateEmprunt(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-12-01 16:00:00'));
         $emprunt->setLivre($livre);
         $emprunt->setEmprunteur($emprunteur);
+        $entityManager->persist($emprunt);
         $entityManager->flush();
         dump($emprunt);
 
@@ -202,10 +204,6 @@ class TestController extends AbstractController
         $entityManager->flush();
         dump($emprunt);
 
-
-
-        return $this->render('test/index.html.twig', [
-            'controller_name' => 'TestController',
-        ]);
+        exit();
     }
 }
